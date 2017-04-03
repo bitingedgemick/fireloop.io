@@ -31,7 +31,7 @@ module.exports = generators.extend({
             DEFAULT_VALUES: false
         };
         this.selected = selected;
-        if (this.options.showOptions) {
+        if (this.options.options.showOptions) {
             return this.prompt([{
                     type: 'checkbox',
                     name: 'list',
@@ -64,11 +64,11 @@ module.exports = generators.extend({
         var _this = this;
         this.options.clients = this.config.get('clients') || {};
         var serverPath;
-        console.log('Serching for server path');
+        console.log('Searching for server path');
         Object.keys(this.options.clients).forEach(function (name) {
             if (_this.options.clients[name].type === 'server') {
                 serverPath = _this.options.clients[name].path;
-                console.log('Serching path found: ', serverPath);
+                console.log('Server path found: ', serverPath);
             }
         });
         this.log(chalk.green("SERVER PATH: " + serverPath));
@@ -77,10 +77,10 @@ module.exports = generators.extend({
         this.log(chalk.green("DEFAULT_VALUES: " + this.selected.DEFAULT_VALUES));
         this.spawnCommand('node_modules/.bin/lb-sdk', [
             'server/server',
-            path.join('../', this.options.clientPath || 'webapp/src/app/shared/sdk'),
-            '-d', !this.options.clientType || this.options.clientType.match(/(ng2web|ng2ionic)/)
+            path.join('../', this.options.options.clientPath || 'webapp/src/app/shared/sdk'),
+            '-d', !this.options.options.clientType || this.options.options.clientType.match(/(ng2web|ng2ionic)/)
                 ? 'ng2web'
-                : this.options.clientType.trim(),
+                : this.options.options.clientType.trim(),
             '-w', 'enabled',
             '-i', this.selected.IO ? 'enabled' : 'disabled',
             '-f', this.selected.FIRELOOP ? 'enabled' : 'disabled',
